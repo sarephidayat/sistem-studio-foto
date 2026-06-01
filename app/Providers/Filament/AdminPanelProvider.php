@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\BookingChart;
+use App\Filament\Widgets\BranchSalesChart;
+use App\Filament\Widgets\StatsDashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Kuy Studio')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -38,8 +42,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                    // AccountWidget::class,
+                    // FilamentInfoWidget::class,
+                StatsDashboard::class,
+                BookingChart::class,
+                BranchSalesChart::class,
+                // BackgroundChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,
