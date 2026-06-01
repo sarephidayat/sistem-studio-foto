@@ -45,8 +45,8 @@ class AdminPanelProvider extends PanelProvider
                     // AccountWidget::class,
                     // FilamentInfoWidget::class,
                 StatsDashboard::class,
-                BookingChart::class,
-                BranchSalesChart::class,
+                // BookingChart::class,
+                // BranchSalesChart::class,
                 // BackgroundChart::class,
             ])
             ->middleware([

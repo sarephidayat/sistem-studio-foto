@@ -69,6 +69,76 @@ class MasterDataSeeder extends Seeder
             ['nama' => 'Kabupaten Bandung'],
         ]);
 
+        // PACKAGES
+        DB::table('packages')->insert([
+            [
+                'title' => 'Photobox (Everyday)',
+                'price' => '30k',
+                'old_price' => '50k',
+                'features' => json_encode([
+                    '10 Minutes Photoshoot',
+                    '5 Minutes Photo Selection',
+                    'Free All Soft Files',
+                    'Free 1 Printed Photo per Session',
+                ]),
+                'category' => 'Photobox',
+                'is_active' => true,
+            ],
+
+            [
+                'title' => 'Potrait Self-Photo Studio (Weekdays)',
+                'price' => '55k',
+                'old_price' => '75k',
+                'features' => json_encode([
+                    '15 Minutes Photoshoot',
+                    '5 Minutes Photo Selection',
+                    'Free All Soft Files',
+                ]),
+                'category' => 'Photo Studio',
+                'is_active' => true,
+            ],
+
+            [
+                'title' => 'Potrait Self-Photo Studio (Weekends)',
+                'price' => '75k',
+                'old_price' => '100k',
+                'features' => json_encode([
+                    '15 Minutes Photoshoot',
+                    '5 Minutes Photo Selection',
+                    'Free All Soft Files',
+                ]),
+                'category' => 'Photo Studio',
+                'is_active' => true,
+            ],
+
+            [
+                'title' => 'Landscape Self-Photo Studio (Everyday)',
+                'price' => '155k',
+                'old_price' => '175k',
+                'features' => json_encode([
+                    '25 Minutes Photoshoot',
+                    '5 Minutes Photo Selection',
+                    'Free All Soft Files',
+                ]),
+                'category' => 'Photo Studio',
+                'is_active' => true,
+            ],
+
+            [
+                'title' => 'High Fisheye Photobox (Everyday)',
+                'price' => '40k',
+                'old_price' => '60k',
+                'features' => json_encode([
+                    '10 Minutes Photoshoot',
+                    '5 Minutes Photo Selection',
+                    'Free All Soft Files',
+                    'Free 1 Printed Photo per Session',
+                ]),
+                'category' => 'Photobox',
+                'is_active' => true,
+            ],
+        ]);
+
         // MASTER WAKTU (contoh slot 20 menit)
         $times = [];
         $start = strtotime('09:00');
