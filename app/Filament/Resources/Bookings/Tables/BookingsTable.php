@@ -27,8 +27,8 @@ class BookingsTable
                 // 2. CUSTOMER (MULTI LINE)
                 TextColumn::make('user.name')
                     ->label('Customer')
-                    ->badge()
-                    ->color('success')
+                    // ->badge()
+                    // ->color('success')
                     ->formatStateUsing(function ($record) {
 
                         $name = $record->user->name ?? '-';
