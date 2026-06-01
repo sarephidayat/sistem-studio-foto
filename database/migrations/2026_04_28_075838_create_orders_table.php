@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignId('pembayaran_id')->constrained('master_pembayaran');
             $table->foreignId('waktu_id')->constrained('master_waktu');
             $table->foreignId('kota_id')->constrained('master_kota');
+            $table->date('tanggal');
             $table->integer('jumlah_orang');
             $table->string('nomor_telepon');
             $table->softDeletes();
