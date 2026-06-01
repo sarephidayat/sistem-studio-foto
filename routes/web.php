@@ -21,7 +21,12 @@ Route::get('/', function () {
 });
 
 Route::get('/booking', function () {
+
+    $selectedPackage = request('package');
+
     return view('booking', [
+        'selectedPackage' => $selectedPackage,
+
         'labels'=> MasterLabel::all(),
         'users' => User::all(),
         'kotas' => MasterKota::all(),
@@ -31,7 +36,7 @@ Route::get('/booking', function () {
         'waktus' => MasterWaktu::all(),
     ]);
 
-});
+})->name('booking');
 
 Route::post('/booking', [BookingController::class, 'store'])
     ->name('booking.store');
@@ -43,3 +48,7 @@ Route::get('/booking/check-slots', function (Request $request) {
     
     return response()->json($booked);
 });
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');

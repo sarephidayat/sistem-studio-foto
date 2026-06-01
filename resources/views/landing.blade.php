@@ -39,16 +39,14 @@ background-size: 40px 40px;
                     Gallery
                 </a>
 
-                <a href="#" class="hover:text-black transition">
+                <a
+                    href="{{ route('contact') }}"
+                    class="hover:text-sky-500 transition"
+                >
                     Contact
                 </a>
 
             </div>
-
-            <!-- BUTTON -->
-            <button class="bg-[#0B132B] hover:opacity-90 transition text-white px-8 py-4 rounded-full font-bold shadow-lg">
-                Booking
-            </button>
 
         </div>
 

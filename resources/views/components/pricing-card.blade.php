@@ -34,15 +34,20 @@
                 {{ $price }}
             </h1>
 
-            <span class="text-3xl text-gray-300 line-through mb-2">
-                {{ $oldPrice }}
-            </span>
+            @if(!empty($oldPrice))
+                <span class="text-3xl text-gray-300 line-through mb-2">
+                    {{ $oldPrice }}
+                </span>
+            @endif
 
         </div>
 
-        <button class="mt-10 bg-[#0B132B] hover:opacity-90 transition text-white py-5 rounded-2xl font-bold text-xl shadow-lg">
+        <a
+            href="{{ route('booking', ['package' => $title]) }}"
+            class="mt-10 bg-[#0B132B] hover:opacity-90 transition text-white py-5 rounded-2xl font-bold text-xl shadow-lg block text-center"
+        >
             Booking Sekarang
-        </button>
+        </a>
 
     </div>
 
