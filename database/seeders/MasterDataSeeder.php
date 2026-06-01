@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -139,23 +140,6 @@ class MasterDataSeeder extends Seeder
             ],
         ]);
 
-        for ($i = 1; $i <= 100; $i++) {
-            DB::table('orders')->insert([
-                'label_id' => rand(1, 3),
-                'user_id' => 1,
-                'background_id' => rand(1, 12),
-                'studio_id' => rand(1, 11),
-                'pembayaran_id' => rand(1, 3),
-                'waktu_id' => rand(1, 36),
-                'kota_id' => rand(1, 8),
-                'tanggal' => fake()->dateTimeBetween('2026-01-01', '2026-06-30')->format('Y-m-d'),
-                'jumlah_orang' => rand(1, 8),
-                'nomor_telepon' => '08' . rand(111111111, 999999999),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
-
         // MASTER WAKTU (contoh slot 20 menit)
         $times = [];
         $start = strtotime('09:00');
@@ -172,5 +156,83 @@ class MasterDataSeeder extends Seeder
         }
 
         DB::table('master_waktu')->insert($times);
+
+        $userId = User::first()->id;
+
+        $labelIds = DB::table('master_label')->pluck('id')->toArray();
+        $backgroundIds = DB::table('master_background')->pluck('id')->toArray();
+        $studioIds = DB::table('master_studio')->pluck('id')->toArray();
+        $pembayaranIds = DB::table('master_pembayaran')->pluck('id')->toArray();
+        $waktuIds = DB::table('master_waktu')->pluck('id')->toArray();
+        $kotaIds = DB::table('master_kota')->pluck('id')->toArray();
+
+        $data = [];
+
+        for ($i = 1; $i <= 100; $i++) {
+
+            $data[] = [
+                'label_id' => fake()->randomElement($labelIds),
+
+                'user_id' => $userId,
+
+                'background_id' => fake()->randomElement($backgroundIds),
+
+                // Banyumanik dibuat lebih ramai
+                'studio_id' => fake()->randomElement([
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    8,
+                    8,
+                    8,
+                    7,
+                    7,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    10,
+                    11
+                ]),
+
+                'pembayaran_id' => fake()->randomElement($pembayaranIds),
+
+                'waktu_id' => fake()->randomElement($waktuIds),
+
+                'kota_id' => fake()->randomElement($kotaIds),
+
+                'tanggal' => fake()
+                    ->dateTimeBetween('2026-01-01', '2026-06-30')
+                    ->format('Y-m-d'),
+
+                'jumlah_orang' => fake()->randomElement([
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    4,
+                    4,
+                    5,
+                    6,
+                ]),
+
+                'nomor_telepon' => fake()->numerify('08##########'),
+
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        DB::table('orders')->insert($data);
+
+
     }
 }
