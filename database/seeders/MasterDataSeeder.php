@@ -139,6 +139,23 @@ class MasterDataSeeder extends Seeder
             ],
         ]);
 
+        for ($i = 1; $i <= 100; $i++) {
+            DB::table('orders')->insert([
+                'label_id' => rand(1, 3),
+                'user_id' => 1,
+                'background_id' => rand(1, 12),
+                'studio_id' => rand(1, 11),
+                'pembayaran_id' => rand(1, 3),
+                'waktu_id' => rand(1, 36),
+                'kota_id' => rand(1, 8),
+                'tanggal' => fake()->dateTimeBetween('2026-01-01', '2026-06-30')->format('Y-m-d'),
+                'jumlah_orang' => rand(1, 8),
+                'nomor_telepon' => '08' . rand(111111111, 999999999),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         // MASTER WAKTU (contoh slot 20 menit)
         $times = [];
         $start = strtotime('09:00');
