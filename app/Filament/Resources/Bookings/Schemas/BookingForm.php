@@ -30,6 +30,7 @@ class BookingForm
                 Select::make('background_id')
                     ->label('Background')
                     ->relationship('background', 'nama')
+                    ->searchable()
                     ->required(),
 
                 // KOTA
@@ -76,7 +77,8 @@ class BookingForm
 
                 // JUMLAH ORANG
                 TextInput::make('nomor_telepon')
-                    ->label('Nomor HP')
+                    ->label('Nomor WhatsApp')
+                    ->placeholder('Masukkan nomor WhatsApp (contoh: 081234567890)')
                     ->string()
                     ->required(),
             ]);

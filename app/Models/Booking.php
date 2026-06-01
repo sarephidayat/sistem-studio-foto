@@ -16,6 +16,7 @@ class Booking extends Model
         'pembayaran_id',
         'waktu_id',
         'kota_id',
+        'tanggal',
         'jumlah_orang',
         'nomor_telepon',
     ];
