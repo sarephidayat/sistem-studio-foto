@@ -35,7 +35,10 @@ background-size: 40px 40px;
                     Pricelist
                 </a>
 
-                <a href="#" class="hover:text-black transition">
+                <a
+                    href="{{ route('gallery') }}"
+                    class="hover:text-black transition"
+                >
                     Gallery
                 </a>
 

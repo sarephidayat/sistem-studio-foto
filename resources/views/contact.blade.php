@@ -37,7 +37,7 @@
                     </a>
 
                     <a
-                        href="/#gallery"
+                        href="{{ route('gallery') }}"
                         class="hover:text-black transition"
                     >
                         Gallery
@@ -169,6 +169,28 @@
         </div>
 
     </div>
+    
+            <!-- FOOTER -->
+    <footer class="py-4">
+
+        <div class="max-w-7xl mx-auto px-6 text-center">
+
+            <p class="text-gray-400 text-lg">
+                © 2026 Kuy Studio. All rights reserved.
+            </p>
+
+            <div class="mt-6 flex items-center justify-center gap-6 text-gray-400 text-2xl">
+
+                <span>📸</span>
+                <span>🎵</span>
+                <span>💬</span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
 
 </body>
 </html>
