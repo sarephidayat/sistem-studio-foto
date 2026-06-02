@@ -27,7 +27,7 @@ Route::get('/booking', function () {
     return view('booking', [
         'selectedPackage' => $selectedPackage,
 
-        'labels'=> MasterLabel::all(),
+        'labels' => MasterLabel::all(),
         'users' => User::all(),
         'kotas' => MasterKota::all(),
         'studios' => MasterStudio::all(),
@@ -45,7 +45,7 @@ Route::get('/booking/check-slots', function (Request $request) {
     $tanggal = $request->tanggal;
     $booked = Booking::whereDate('tanggal', $tanggal)
         ->pluck('waktu_id');
-    
+
     return response()->json($booked);
 });
 
@@ -56,3 +56,14 @@ Route::get('/contact', function () {
 Route::get('/gallery', function () {
     return view('gallery');
 })->name('gallery');
+
+Route::get('/master-data', function () {
+
+    return response()->json([
+        'studios' => MasterStudio::select(
+            'id',
+            'nama'
+        )->get()
+    ]);
+
+});

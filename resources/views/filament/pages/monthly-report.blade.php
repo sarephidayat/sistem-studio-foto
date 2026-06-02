@@ -1,37 +1,38 @@
 <x-filament-panels::page>
 
     <style>
+
         .filter-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 25px;
-}
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px;
+        }
 
-.filter-card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px 20px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+        .filter-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-.filter-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #6b7280;
-    margin-bottom: 8px;
-}
+        .filter-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #6b7280;
+        }
 
-.filter-input {
-    padding: 10px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    min-width: 220px;
-}
+        .filter-input {
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+        }
+
         .report-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3,1fr);
             gap: 20px;
             margin-bottom: 25px;
         }
@@ -53,24 +54,18 @@
         .report-card-value {
             font-size: 36px;
             font-weight: bold;
-            color: #111827;
         }
 
         .booking-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
         .booking-table th {
             background: #f8fafc;
             padding: 15px;
             text-align: left;
-            font-size: 13px;
-            text-transform: uppercase;
             border-bottom: 1px solid #e5e7eb;
         }
 
@@ -80,7 +75,7 @@
         }
 
         .booking-table tr:hover {
-            background: #f9fafb;
+            background: #fafafa;
         }
 
         .badge {
@@ -96,53 +91,25 @@
             color: #6d28d9;
         }
 
-        .badge-jam {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .badge-background {
-            background: #ffedd5;
-            color: #ea580c;
-        }
-
         .badge-orang {
             background: #dcfce7;
             color: #16a34a;
         }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .filter-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-        }
     </style>
 
+    {{-- Filter Bulan --}}
     <div class="filter-wrapper">
 
         <div class="filter-card">
 
             <label class="filter-label">
-                Pilih Tanggal
+                Pilih Bulan
             </label>
 
             <input
-                type="date"
-                wire:model.live="tanggal"
+                type="month"
+                wire:model.live="bulan"
                 class="filter-input"
             >
 
@@ -150,48 +117,60 @@
 
     </div>
 
-    {{-- Summary Cards --}}
+    {{-- Summary --}}
     <div class="report-cards">
 
-    <div class="report-card">
-        <div class="report-card-title">Total Booking</div>
-        <div class="report-card-value">
-            {{ $this->getBookings()->count() }}
+        <div class="report-card">
+
+            <div class="report-card-title">
+                Total Booking
+            </div>
+
+            <div class="report-card-value">
+                {{ $this->getBookings()->count() }}
+            </div>
+
         </div>
-    </div>
 
-    <div class="report-card">
-        <div class="report-card-title">Total Customer</div>
-        <div class="report-card-value">
-            {{ $this->getBookings()->sum('jumlah_orang') }}
+        <div class="report-card">
+
+            <div class="report-card-title">
+                Total Customer
+            </div>
+
+            <div class="report-card-value">
+                {{ $this->getBookings()->sum('jumlah_orang') }}
+            </div>
+
         </div>
-    </div>
 
-    <div class="report-card">
-        <div class="report-card-title">Studio Digunakan</div>
-        <div class="report-card-value">
-            {{ $this->getBookings()->pluck('studio_id')->unique()->count() }}
+        <div class="report-card">
+
+            <div class="report-card-title">
+                Studio Digunakan
+            </div>
+
+            <div class="report-card-value">
+                {{ $this->getBookings()->pluck('studio_id')->unique()->count() }}
+            </div>
+
         </div>
+
     </div>
 
-</div>
-
-    {{-- Tabel --}}
-    <div class="section-title">
-        Detail Booking
-    </div>
-
+    {{-- Detail --}}
     <table class="booking-table">
 
         <thead>
+
             <tr>
                 <th>Customer</th>
                 <th>Studio</th>
                 <th>Tanggal</th>
-                <th>Jam</th>
                 <th>Background</th>
                 <th>Orang</th>
             </tr>
+
         </thead>
 
         <tbody>
@@ -205,31 +184,27 @@
                     </td>
 
                     <td>
+
                         <span class="badge badge-studio">
                             {{ $booking->studio->nama }}
                         </span>
+
                     </td>
 
                     <td>
-                        {{ $booking->tanggal }}
+                        {{ \Carbon\Carbon::parse($booking->tanggal)->format('d M Y') }}
                     </td>
 
                     <td>
-                        <span class="badge badge-jam">
-                            {{ date('H:i', strtotime($booking->waktu->waktu)) }}
-                        </span>
+                        {{ $booking->background->nama }}
                     </td>
 
                     <td>
-                        <span class="badge badge-background">
-                            {{ $booking->background->nama }}
-                        </span>
-                    </td>
 
-                    <td>
                         <span class="badge badge-orang">
                             {{ $booking->jumlah_orang }} Orang
                         </span>
+
                     </td>
 
                 </tr>
@@ -237,11 +212,11 @@
             @empty
 
                 <tr>
-                    <td colspan="6">
-                        <div class="empty-state">
-                            Tidak ada data booking pada tanggal ini
-                        </div>
+
+                    <td colspan="5" style="text-align:center;padding:40px;">
+                        Tidak ada data bulan ini
                     </td>
+
                 </tr>
 
             @endforelse
