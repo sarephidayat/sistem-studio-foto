@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\MasterStudio;
+use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
@@ -28,5 +29,20 @@ class BookingController extends Controller
         return redirect('/booking')
             ->with('success', 'Booking berhasil dikirim 🎉');
 
+    }
+    public function getOutlets($kotaId)
+    {
+        return MasterStudio::query()
+            ->where('kota_id', $kotaId)
+            ->select('id', 'nama')
+            ->orderBy('nama')
+            ->get();
+    }
+    public function getBookedSlots(Request $request)
+    {
+        return Booking::query()
+            ->where('studio_id', $request->studio_id)
+            ->whereDate('tanggal', $request->tanggal)
+            ->pluck('waktu_id');
     }
 }

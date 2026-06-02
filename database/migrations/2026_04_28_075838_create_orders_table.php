@@ -11,18 +11,48 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
+
             $table->id();
-            $table->foreignId('label_id')->constrained('master_label');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('background_id')->constrained('master_background');
-            $table->foreignId('studio_id')->constrained('master_studio');
-            $table->foreignId('pembayaran_id')->constrained('master_pembayaran');
-            $table->foreignId('waktu_id')->constrained('master_waktu');
-            $table->foreignId('kota_id')->constrained('master_kota');
+
+            $table->foreignId('label_id')
+                ->constrained('master_label');
+
+            $table->foreignId('user_id')
+                ->constrained('users');
+
+            $table->foreignId('background_id')
+                ->constrained('master_background');
+
+            $table->foreignId('studio_id')
+                ->constrained('master_studio');
+
+            $table->foreignId('pembayaran_id')
+                ->constrained('master_pembayaran');
+
+            $table->foreignId('waktu_id')
+                ->constrained('master_waktu');
+
+            $table->foreignId('kota_id')
+                ->constrained('master_kota');
+
             $table->date('tanggal');
+
             $table->integer('jumlah_orang');
+
             $table->string('nomor_telepon');
+
+            /**
+             * Mencegah booking bentrok
+             * Outlet + Tanggal + Jam harus unik
+             */
+            $table->unique([
+                'studio_id',
+                'tanggal',
+                'waktu_id'
+            ], 'unique_booking_slot');
+
             $table->softDeletes();
+
             $table->timestamps();
         });
     }

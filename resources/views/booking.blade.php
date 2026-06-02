@@ -6,6 +6,19 @@
     <title>Booking - Kuy Studio</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+
+    .time-pill {
+        transition: all .2s ease;
+    }
+
+    .time-pill.opacity-50 {
+        background: #d1d5db !important;
+        color: #6b7280 !important;
+        cursor: not-allowed;
+    }
+
+    </style>
 </head>
 
 <body class="bg-[#F5F7FA] min-h-screen text-[#0B132B]">
@@ -132,6 +145,7 @@
                     </label>
 
                     <select
+                        id="kota_id"
                         name="kota_id"
                         class="mt-3 w-full rounded-2xl border border-gray-200 bg-[#F9FAFB] px-5 py-4 text-[#0B132B]"
                     >
@@ -156,19 +170,12 @@
                     </label>
 
                     <select
+                        id="studio_id"
                         name="studio_id"
                         class="mt-3 w-full rounded-2xl border border-gray-200 bg-[#F9FAFB] px-5 py-4 text-[#0B132B]"
                     >
 
                         <option value="">Select studio</option>
-
-                        @foreach ($studios as $studio)
-
-                            <option value="{{ $studio->id }}">
-                                {{ $studio->nama }}
-                            </option>
-
-                        @endforeach
 
                     </select>
                 </div>
@@ -206,7 +213,7 @@
                     <input
                         id="booking_date"
                         name="tanggal"
-                        type="text"
+                        type="date"
                         class="mt-3 w-full rounded-2xl border border-gray-200 bg-[#F9FAFB] px-5 py-4 text-[#0B132B]"
                     >
                 </div>
@@ -433,6 +440,155 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+</script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const kotaSelect =
+        document.getElementById('kota_id');
+
+    const studioSelect =
+        document.getElementById('studio_id');
+
+    const tanggalInput =
+        document.getElementById('booking_date');
+
+    // ======================
+    // LOAD OUTLET
+    // ======================
+
+    kotaSelect.addEventListener(
+        'change',
+        async function () {
+
+            const kotaId = this.value;
+
+            studioSelect.innerHTML =
+                '<option value="">Loading...</option>';
+
+            const response =
+                await fetch(
+                    `/booking/outlets/${kotaId}`
+                );
+
+            const outlets =
+                await response.json();
+
+            studioSelect.innerHTML =
+                '<option value="">Pilih Outlet</option>';
+
+            outlets.forEach(outlet => {
+
+                studioSelect.innerHTML += `
+                    <option value="${outlet.id}">
+                        ${outlet.nama}
+                    </option>
+                `;
+
+            });
+
+            resetSlots();
+
+        }
+    );
+
+    // ======================
+    // LOAD BOOKED SLOT
+    // ======================
+
+    async function loadBookedSlots()
+    {
+        const studioId =
+            studioSelect.value;
+
+        const tanggal =
+            tanggalInput.value;
+
+        if (!studioId || !tanggal) {
+
+            resetSlots();
+
+            return;
+        }
+
+        const response =
+            await fetch(
+                `/booking/booked-slots?studio_id=${studioId}&tanggal=${tanggal}`
+            );
+
+        const booked =
+            await response.json();
+
+        document
+            .querySelectorAll(
+                'input[name="waktu_id"]'
+            )
+            .forEach(radio => {
+
+                radio.disabled = false;
+
+                const pill =
+                    radio.nextElementSibling;
+
+                pill.classList.remove(
+                    'opacity-50',
+                    'cursor-not-allowed'
+                );
+
+                if (
+                    booked.includes(
+                        parseInt(radio.value)
+                    )
+                ) {
+
+                    radio.disabled = true;
+
+                    pill.classList.add(
+                        'opacity-50',
+                        'cursor-not-allowed'
+                    );
+                }
+
+            });
+    }
+
+    // ======================
+    // RESET SLOT
+    // ======================
+
+    function resetSlots()
+    {
+        document
+            .querySelectorAll(
+                'input[name="waktu_id"]'
+            )
+            .forEach(radio => {
+
+                radio.disabled = false;
+
+                const pill =
+                    radio.nextElementSibling;
+
+                pill.classList.remove(
+                    'opacity-50',
+                    'cursor-not-allowed'
+                );
+
+            });
+    }
+
+    studioSelect.addEventListener(
+        'change',
+        loadBookedSlots
+    );
+
+    tanggalInput.addEventListener(
+        'change',
+        loadBookedSlots
+    );
+
+});
 </script>
 </body>
 </html>

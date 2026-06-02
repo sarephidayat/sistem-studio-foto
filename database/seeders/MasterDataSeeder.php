@@ -36,19 +36,79 @@ class MasterDataSeeder extends Seeder
             ['nama' => 'Black Piramid Sound Diffuser'],
         ]);
 
+        DB::table('master_kota')->insert([
+
+            ['nama' => 'Malang'],
+            ['nama' => 'Surabaya'],
+            ['nama' => 'Jakarta Selatan'],
+            ['nama' => 'Bali'],
+            ['nama' => 'Jogja'],
+            ['nama' => 'Jember'],
+            ['nama' => 'Semarang'],
+            ['nama' => 'Surakarta'],
+
+        ]);
         // MASTER STUDIO
         DB::table('master_studio')->insert([
-            ['nama' => 'Kuy Studio 1.0 Oro Oro Dowo'],
-            ['nama' => 'Kuy Studio 2.0 Suhat'],
-            ['nama' => 'Kuy Studio 3.0 Klampis'],
-            ['nama' => 'Kuy Studio 4.0 Kilisuci'],
-            ['nama' => 'Kuy Studio 5.0 Jagakarsa'],
-            ['nama' => 'Kuy Studio 6.0 Badung'],
-            ['nama' => 'Kuy Studio 7.0 Affandi'],
-            ['nama' => 'Kuy Studio 8.0 Jember'],
-            ['nama' => 'Kuy Studio 9.0 Banyumanik'],
-            ['nama' => 'Kuy Studio 10.0 Labuan'],
-            ['nama' => 'Kuy Studio 11.0 Karangasem'],
+
+            // MALANG
+            [
+                'kota_id' => 1,
+                'nama' => 'Kuy Studio 1.0 Oro Oro Dowo',
+            ],
+
+            [
+                'kota_id' => 1,
+                'nama' => 'Kuy Studio 2.0 Suhat',
+            ],
+
+            // SURABAYA
+            [
+                'kota_id' => 2,
+                'nama' => 'Kuy Studio 3.0 Klampis',
+            ],
+
+            // JAKARTA SELATAN
+            [
+                'kota_id' => 3,
+                'nama' => 'Kuy Studio 4.0 Jagakarsa',
+            ],
+
+            // BALI
+            [
+                'kota_id' => 4,
+                'nama' => 'Kuy Studio 5.0 Badung',
+            ],
+
+            // JOGJA
+            [
+                'kota_id' => 5,
+                'nama' => 'Kuy Studio 6.0 Affandi',
+            ],
+
+            // JEMBER
+            [
+                'kota_id' => 6,
+                'nama' => 'Kuy Studio 7.0 Sultan Agung',
+            ],
+
+            // SEMARANG
+            [
+                'kota_id' => 7,
+                'nama' => 'Kuy Studio 8.0 Banyumanik',
+            ],
+
+            [
+                'kota_id' => 7,
+                'nama' => 'Kuy Studio 9.0 Labuan',
+            ],
+
+            // SURAKARTA
+            [
+                'kota_id' => 8,
+                'nama' => 'Kuy Studio 10.0 Karangasem',
+            ],
+
         ]);
 
         // MASTER PEMBAYARAN
@@ -58,17 +118,7 @@ class MasterDataSeeder extends Seeder
             ['nama' => 'QRIS'],
         ]);
 
-        // MASTER KOTA
-        DB::table('master_kota')->insert([
-            ['nama' => 'Kota Jakarta Selatan'],
-            ['nama' => 'Kota Semarang'],
-            ['nama' => 'Kabupaten Sleman'],
-            ['nama' => 'Kabupaten Jember'],
-            ['nama' => 'Kota Kediri'],
-            ['nama' => 'Kota Malang'],
-            ['nama' => 'Kota Surabaya'],
-            ['nama' => 'Kabupaten Bandung'],
-        ]);
+
 
         // PACKAGES
         DB::table('packages')->insert([
@@ -157,81 +207,7 @@ class MasterDataSeeder extends Seeder
 
         DB::table('master_waktu')->insert($times);
 
-        $userId = User::first()->id;
 
-        $labelIds = DB::table('master_label')->pluck('id')->toArray();
-        $backgroundIds = DB::table('master_background')->pluck('id')->toArray();
-        $studioIds = DB::table('master_studio')->pluck('id')->toArray();
-        $pembayaranIds = DB::table('master_pembayaran')->pluck('id')->toArray();
-        $waktuIds = DB::table('master_waktu')->pluck('id')->toArray();
-        $kotaIds = DB::table('master_kota')->pluck('id')->toArray();
-
-        $data = [];
-
-        for ($i = 1; $i <= 100; $i++) {
-
-            $data[] = [
-                'label_id' => fake()->randomElement($labelIds),
-
-                'user_id' => $userId,
-
-                'background_id' => fake()->randomElement($backgroundIds),
-
-                // Banyumanik dibuat lebih ramai
-                'studio_id' => fake()->randomElement([
-                    9,
-                    9,
-                    9,
-                    9,
-                    9,
-                    8,
-                    8,
-                    8,
-                    7,
-                    7,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    10,
-                    11
-                ]),
-
-                'pembayaran_id' => fake()->randomElement($pembayaranIds),
-
-                'waktu_id' => fake()->randomElement($waktuIds),
-
-                'kota_id' => fake()->randomElement($kotaIds),
-
-                'tanggal' => fake()
-                    ->dateTimeBetween('2026-01-01', '2026-06-30')
-                    ->format('Y-m-d'),
-
-                'jumlah_orang' => fake()->randomElement([
-                    1,
-                    2,
-                    2,
-                    2,
-                    2,
-                    3,
-                    3,
-                    3,
-                    4,
-                    4,
-                    5,
-                    6,
-                ]),
-
-                'nomor_telepon' => fake()->numerify('08##########'),
-
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        DB::table('orders')->insert($data);
 
 
     }

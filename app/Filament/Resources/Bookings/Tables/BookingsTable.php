@@ -17,6 +17,7 @@ class BookingsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('tanggal', 'desc')
             ->columns([
 
                 // 1. TANGGAL PESAN
@@ -147,6 +148,7 @@ class BookingsTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+
             ]);
     }
 }

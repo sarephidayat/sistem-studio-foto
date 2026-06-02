@@ -15,6 +15,12 @@ class MasterStudiosTable
         return $table
             ->columns([
                 TextColumn::make('nama')
+                    ->label('Outlet')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('kota.nama')
+                    ->label('Kota')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

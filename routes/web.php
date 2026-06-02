@@ -20,6 +20,16 @@ Route::get('/', function () {
     return view('landing', compact('packages'));
 });
 
+Route::get(
+    '/booking/outlets/{kota}',
+    [BookingController::class, 'getOutlets']
+);
+
+Route::get(
+    '/booking/booked-slots',
+    [BookingController::class, 'getBookedSlots']
+);
+
 Route::get('/booking', function () {
 
     $selectedPackage = request('package');
