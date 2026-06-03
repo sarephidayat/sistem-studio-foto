@@ -147,12 +147,11 @@ def process_time_selection(
             )
 
             print()
-            print(
+            return (
                 f"Jam dipilih: {slot['waktu']}"
             )
-            print()
 
-            break
+            
 
 
 def process_booking(user_id):
@@ -189,11 +188,7 @@ def process_booking(user_id):
 
         clear_session(user_id)
 
-        print()
-        print("BOOKING BERHASIL")
-        print(result)
-        print("SESSION DIHAPUS")
-        print()
+        return result
 
     else:
 
